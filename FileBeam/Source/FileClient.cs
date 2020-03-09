@@ -20,7 +20,6 @@ namespace FileBeam
             var range = Network.GetIpRange(net.IpAddress, net.SubnetMask);
             foreach (var address in range)
             {
-                Console.WriteLine("[Debug] Trying " + address);
                 var result = ScanIpForDiscovery(address);
                 if (result != null)
                 {
@@ -36,6 +35,8 @@ namespace FileBeam
             try
             {
                 var url = String.Format("http://{0}:{1}/beam/profile/identify", ipAddress, Network.PORT);
+                Console.WriteLine("[Debug] Trying " + url);
+
                 var request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = Network.TIMEOUT_MS;
                 request.AutomaticDecompression = DecompressionMethods.GZip;
