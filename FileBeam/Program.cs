@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FileBeam
@@ -23,9 +19,6 @@ namespace FileBeam
             });
             t1.IsBackground = true;
             t1.Start();
-
-            var servers = FileClient.DiscoverServers();
-            MessageBox.Show(JsonConvert.SerializeObject(servers));
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

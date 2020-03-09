@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace FileBeam
@@ -21,6 +23,14 @@ namespace FileBeam
             int idx1 = rnd.Next(fruits.Length);
             int idx2 = rnd.Next(nouns.Length);
             DeviceName = String.Format("{0} {1}", fruits[idx1], nouns[idx2]);
+
+            var t1 = new Thread(() =>
+            {
+                var servers = FileClient.DiscoverServers();
+                MessageBox.Show(JsonConvert.SerializeObject(servers));
+            });
+            t1.IsBackground = true;
+            t1.Start();
         }
     }
 }
