@@ -40,9 +40,10 @@ namespace FileBeam
                     }
 
                     // TODO: Remove
-                    var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "file");
+                    var filePath = Path.Combine(Network.DefaultDirectory, "file");
                     if (File.Exists(filePath))
                     {
+                        Console.WriteLine("Sending file " + filePath);
                         SendFile(address, filePath);
                     }
                 }

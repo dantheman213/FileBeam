@@ -11,7 +11,7 @@ namespace FileBeam
     {
         public static int PORT = 58715;
         public static int TIMEOUT_MS = 150;
-        public static string DefaultDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory);
+        public static string DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         public static List<NetworkInterfaceModel> GetPrimaryNetworkInterfaces()
         {
