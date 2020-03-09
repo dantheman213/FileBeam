@@ -40,15 +40,14 @@ namespace FileBeam
                 default:
                     RouteNotFound(context);
                     break;
-
             }
         }
 
         private void RouteNotFound(HttpListenerContext context)
         {
-            var response = context.Response;
-            response.StatusCode = 404;
-            response.Close();
+            var res = context.Response;
+            res.StatusCode = 404;
+            res.Close();
         }
 
         private void RouteIdentify(HttpListenerContext context)
@@ -59,13 +58,11 @@ namespace FileBeam
             var response = context.Response;
             response.StatusCode = 200;
             using (var os = response.OutputStream)
+            using (var sw = new StreamWriter(os, Encoding.UTF8))
             {
-                using (var sw = new StreamWriter(os, Encoding.UTF8))
-                {
-                    sw.Write(JsonConvert.SerializeObject(model));
-                }
+                sw.Write(JsonConvert.SerializeObject(model));
             }
-
+       
             response.Close();
         }
 
@@ -73,21 +70,23 @@ namespace FileBeam
         {
             var req = context.Request;
             var filename = req.Headers["X-File-Name"];
-            var filePath = Path.Combine(Network.DefaultDirectory, filename);
+            var relativePath = "";
+            if (req.Headers["X-File-Relative-Path"] != null)
+            {
+                relativePath = req.Headers["X-File-Relative-Path"];
+            }
+            var filePath = Path.Combine(Network.DefaultDirectory, relativePath, filename);
 
             Console.WriteLine("Writing to " + filename);
-            
             using (var ips = req.InputStream)
+            using (var ofs = new FileStream(filePath, FileMode.Create))
             {
-                using (var ofs = new FileStream(filePath, FileMode.Create))
-                {
-                    ips.CopyTo(ofs);
-                }
+                ips.CopyTo(ofs);
             }
-
-            var response = context.Response;
-            response.StatusCode = 200;
-            response.Close();
+         
+            var res = context.Response;
+            res.StatusCode = 200;
+            res.Close();
         }
 
         public void Start()

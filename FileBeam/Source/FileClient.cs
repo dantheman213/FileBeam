@@ -84,7 +84,12 @@ namespace FileBeam
             return null;
         }
 
-        public void SendFile(string ipAddress, string filePath)
+        public void SendDirectory(string ipAddress, string dirPath, string relativePath = "")
+        {
+            // TODO
+        }
+
+        public void SendFile(string ipAddress, string filePath, string relativePath = "")
         {
             try
             {
@@ -95,13 +100,14 @@ namespace FileBeam
                 req.Method = "POST";
                 req.ContentType = "application/octet-stream";
                 req.Timeout = 2000;
+                req.Headers["X-File-Relative-Path"] = relativePath;
                 req.Headers["X-File-Name"] = Path.GetFileName(filePath);
                 req.AutomaticDecompression = DecompressionMethods.GZip;
 
                 using (var stream = req.GetRequestStream())
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    byte[] buffer = new byte[1 * 1024 * 1024]; // 5MB in bytes is 5 * 2^20
+                    byte[] buffer = new byte[1 * 1024 * 1024]; // 1MB
                     int bytesRead = fs.Read(buffer, 0, buffer.Length);
 
                     while (bytesRead > 0)
