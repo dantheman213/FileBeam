@@ -34,9 +34,6 @@ namespace FileBeam
                 case "/beam/profile/identify":
                     RouteIdentify(context);
                     break;
-                case "/beam/data/request":
-                    RouteRequest(context);
-                    break;
                 case "/beam/data/send":
                     RouteSend(context);
                     break;
@@ -72,38 +69,25 @@ namespace FileBeam
             response.Close();
         }
 
-        private void RouteRequest(HttpListenerContext context)
+        private void RouteSend(HttpListenerContext context)
         {
-            var request = context.Request;
+            var req = context.Request;
+            var filename = req.Headers["X-File-Name"];
+            var filePath = Path.Combine(Network.DefaultDirectory, filename);
 
-            string contents;
-            using (var ips = request.InputStream)
+            Console.WriteLine("Writing to " + filename);
+            
+            using (var ips = req.InputStream)
             {
-                using (var sr = new StreamReader(ips, Encoding.UTF8))
+                using (var ofs = new FileStream(filePath, FileMode.Create))
                 {
-                    contents = sr.ReadToEnd();
+                    ips.CopyTo(ofs);
                 }
             }
-
-            Console.WriteLine($"Received request for {request.Url}");
-            Console.WriteLine(contents);
 
             var response = context.Response;
             response.StatusCode = 200;
-            using (var os = response.OutputStream)
-            {
-                using (var sw = new StreamWriter(os, Encoding.UTF8))
-                {
-                    sw.Write("request ok");
-                }
-            }
-
             response.Close();
-        }
-
-        private void RouteSend(HttpListenerContext context)
-        {
-            // TODO
         }
 
         public void Start()

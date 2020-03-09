@@ -19,6 +19,8 @@ namespace FileBeam
 
         private void FrameMain_Load(object sender, System.EventArgs e)
         {
+            var client = new FileClient();
+
             var rnd = new Random();
             int idx1 = rnd.Next(fruits.Length);
             int idx2 = rnd.Next(nouns.Length);
@@ -26,8 +28,8 @@ namespace FileBeam
 
             var t1 = new Thread(() =>
             {
-                var servers = FileClient.DiscoverServers();
-                MessageBox.Show(JsonConvert.SerializeObject(servers));
+                client.DiscoverServers();
+                MessageBox.Show(JsonConvert.SerializeObject(client.Phonebook));
             });
             t1.IsBackground = true;
             t1.Start();

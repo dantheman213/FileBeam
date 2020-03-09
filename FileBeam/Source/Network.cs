@@ -11,6 +11,7 @@ namespace FileBeam
     {
         public static int PORT = 58715;
         public static int TIMEOUT_MS = 150;
+        public static string DefaultDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonDesktopDirectory);
 
         public static List<NetworkInterfaceModel> GetPrimaryNetworkInterfaces()
         {
@@ -45,6 +46,11 @@ namespace FileBeam
             var range = IPAddressRange.Parse(String.Format("{0}/{1}", ip, subnet));            
             foreach (var item in range)
             {
+                if (item.ToString() == ip)
+                {
+                    continue;
+                }
+
                 items.Add(item.ToString());
             }
 
