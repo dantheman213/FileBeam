@@ -110,6 +110,16 @@ namespace FileBeam
                         bytesRead = fs.Read(buffer, 0, buffer.Length);
                     }
                 }
+
+                using (var res = (HttpWebResponse)req.GetResponse())
+                {
+                    if (res.StatusCode == HttpStatusCode.OK)
+                    {
+                        // TODO
+                    }
+
+                    res.Close();
+                }
             }
             catch (Exception ex)
             {
