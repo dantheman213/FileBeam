@@ -1,18 +1,19 @@
+# OS level ignores
 .DS_Store
 [Tt]humbs.db
 
-.vs/
-
-bin/
-obj/
-
+# Generic stuff to ignore from build tools
+node_modules/
 *.log
 
-# NuGet Packages
-*.nupkg
-# The packages folder can be ignored because of Package Restore
-**/packages/*
-# except build/, which is used as an MSBuild target.
-!**/packages/build/
-# Uncomment if necessary however generally it will be regenerated when needed
-#!**/packages/repositories.config
+# Intellij project
+.idea/
+*.iml
+
+# Gradle ignores
+.gradle/
+gradle/
+gradlew*
+build/
+out/
+bin/
