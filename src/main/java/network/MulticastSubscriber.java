@@ -1,4 +1,4 @@
-package app.network;
+package network;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -42,6 +42,7 @@ public class MulticastSubscriber extends Thread {
 
                 // skip submissions sent from this device
                 if (publisherIp.equals(localAddress)) {
+                    // System.out.println(String.format("Found local address: %s", localAddress));
                     continue;
                 }
 

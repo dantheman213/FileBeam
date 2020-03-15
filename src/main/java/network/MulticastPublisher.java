@@ -1,8 +1,8 @@
-package app.network;
+package network;
 
 import java.net.*;
 
-import static app.network.MulticastSubscriber.BROADCAST_MESSAGE;
+import static network.MulticastSubscriber.BROADCAST_MESSAGE;
 
 public class MulticastPublisher extends Thread {
     private static final int BROADCAST_INTERVAL_MS = 5000;

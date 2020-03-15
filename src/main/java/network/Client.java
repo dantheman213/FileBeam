@@ -1,14 +1,13 @@
-package app.network;
+package network;
 
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static app.network.Server.SERVER_PORT;
+import static network.Server.SERVER_PORT;
 
 public class Client {
     private Socket socket;

@@ -1,7 +1,5 @@
-package app;
-
-import app.network.*;
-import app.views.FrameMain;
+import network.*;
+import views.FrameMain;
 
 import java.util.ArrayList;
 

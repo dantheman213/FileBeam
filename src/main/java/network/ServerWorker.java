@@ -1,4 +1,4 @@
-package app.network;
+package network;
 
 import javax.swing.*;
 import java.io.BufferedInputStream;

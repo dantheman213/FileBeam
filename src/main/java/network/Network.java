@@ -1,4 +1,4 @@
-package app.network;
+package network;
 
 import java.net.NetworkInterface;
 import java.util.*;
