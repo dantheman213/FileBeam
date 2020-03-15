@@ -1,6 +1,8 @@
 package app.views;
 
 import javax.swing.*;
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
@@ -28,7 +30,11 @@ public class FrameMain {
         menu = new JMenuBar();
         var menuFile = new JMenu("File");
         menuFile.setMnemonic(KeyEvent.VK_F);
-        menuFile.add(new JMenuItem("Exit"));
+
+        var btnFileMenuExit = new JMenuItem("Exit");
+        btnFileMenuExit.addActionListener(btnFileMenuExit_Clicked());
+        menuFile.add(btnFileMenuExit);
+
         menu.add(menuFile);
         frame.add(menu, BorderLayout.NORTH);
 
@@ -42,6 +48,15 @@ public class FrameMain {
         frame.add(chkAllowDiscovery, BorderLayout.SOUTH);
 
         frame.setVisible(true);
+    }
+
+    private ActionListener btnFileMenuExit_Clicked() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        };
     }
 
     private ActionListener chkAllowDiscovery_Checked() {
