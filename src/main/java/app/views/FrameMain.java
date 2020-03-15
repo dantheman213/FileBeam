@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class FrameMain {
@@ -36,8 +38,24 @@ public class FrameMain {
         frame.add(treeContactList, BorderLayout.CENTER);
 
         chkAllowDiscovery = new JCheckBox("Allow Discovery");
+        chkAllowDiscovery.addActionListener(chkAllowDiscovery_Checked());
         frame.add(chkAllowDiscovery, BorderLayout.SOUTH);
 
         frame.setVisible(true);
+    }
+
+    private ActionListener chkAllowDiscovery_Checked() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (chkAllowDiscovery.isSelected()) {
+
+                } else {
+
+                }
+
+                JOptionPane.showMessageDialog(null, String.format("Discovery set to %b", chkAllowDiscovery.isSelected())); // TODO: remove
+            }
+        };
     }
 }
