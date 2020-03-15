@@ -18,3 +18,8 @@ jar {
         )
     }
 }
+
+task runJar(type: JavaExec) {
+    main = "-jar";
+    args jar.archivePath
+}
