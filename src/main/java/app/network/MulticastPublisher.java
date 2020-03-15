@@ -1,30 +1,34 @@
 package app.network;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.net.*;
 
-import static app.network.MulticastReceiver.BROADCAST_MESSAGE;
+import static app.network.MulticastSubscriber.BROADCAST_MESSAGE;
 
 public class MulticastPublisher extends Thread {
-    private static final int BROADCAST_INTERVAL_MS = 10000;
+    private static final int BROADCAST_INTERVAL_MS = 5000;
 
+    private NetworkInterface nic;
     private DatagramSocket socket;
     private InetAddress group;
     private byte[] buf;
 
+    public MulticastPublisher(NetworkInterface n) throws Exception {
+        nic = n;
+        socket = new DatagramSocket(new InetSocketAddress(nic.getInterfaceAddresses().get(0).getAddress(), 0));
+    }
+
     public void run() {
         try {
-            socket = new DatagramSocket();
-            group = InetAddress.getByName(MulticastReceiver.BROADCAST_ADDRESS);
+            group = InetAddress.getByName(MulticastSubscriber.BROADCAST_ADDRESS);
             buf = BROADCAST_MESSAGE.getBytes();
 
-            System.out.println("Broadcasting to group for discovery...");
+            System.out.println(String.format("Broadcasting to multicast group for discovery on nic %s every %d seconds...", nic.getDisplayName(), BROADCAST_INTERVAL_MS / 1000));
+            while(true) {
+                var packet = new DatagramPacket(buf, buf.length, group, MulticastSubscriber.BROADCAST_PORT);
+                socket.send(packet);
 
-            var packet = new DatagramPacket(buf, buf.length, group, MulticastReceiver.BROADCAST_PORT);
-            socket.send(packet);
-
-            Thread.sleep(BROADCAST_INTERVAL_MS);
+                Thread.sleep(BROADCAST_INTERVAL_MS);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

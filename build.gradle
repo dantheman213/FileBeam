@@ -14,7 +14,7 @@ dependencies {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'app.Main'
+                'Main-Class': 'app.Application'
         )
     }
 }

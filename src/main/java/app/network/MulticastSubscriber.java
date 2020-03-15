@@ -5,9 +5,8 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
-public class MulticastReceiver extends Thread {
+public class MulticastSubscriber extends Thread {
     protected static final String BROADCAST_ADDRESS = "230.0.0.0";
     protected static final int BROADCAST_PORT = 30000;
     protected static final String BROADCAST_MESSAGE = "FILE_BEAM_PING";
@@ -19,7 +18,7 @@ public class MulticastReceiver extends Thread {
 
     public ConcurrentHashMap<String, String> phonebook;
 
-    public MulticastReceiver(NetworkInterface network) {
+    public MulticastSubscriber(NetworkInterface network) {
         phonebook = new ConcurrentHashMap<String, String>();
         networkInterface = network;
         localAddress = networkInterface.getInterfaceAddresses().get(0).getAddress();
@@ -27,7 +26,7 @@ public class MulticastReceiver extends Thread {
 
     public void run() {
         try {
-            System.out.println("Starting multicast server...");
+            System.out.println(String.format("Starting multicast subscriber on network interface: %s...", networkInterface.getDisplayName()));
 
             socket = new MulticastSocket(BROADCAST_PORT);
             socket.setInterface(localAddress);
